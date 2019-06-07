@@ -49,10 +49,12 @@ namespace WindowsFormsApp1
             openFileDialog1.Filter = "N64 ROM Files (Z64,ROM,N64)|*.Z64;*.N64;*.ROM";
             openFileDialog1.FileName = "SM64 ROM";
             if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-
-
-
-                textBox1.Text = openFileDialog1.FileName;
+                Open(openFileDialog1.FileName)
+        }
+        
+        public void Open(string filename)
+        {
+            textBox1.Text = filename;
             if (textBox1.TextLength > 0)
             {
                 comboBox1.Enabled = true;
@@ -78,15 +80,7 @@ namespace WindowsFormsApp1
 
 
                 comboBox1.SelectedIndex = 0;
-                }
-
-            }
-
-                
-
-
-            
-
+             }
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)

@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SM64_RGB_Editor.exe" size="29624">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SM64_RGB_Editor.exe" size="29184">
       <assemblyIdentity name="SM64_RGB_Editor" version="2.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Ut/d9n8cGKjv6f4p50rWyyoHSQ/L0p5DXU/9AbZBpC8=</dsig:DigestValue>
+        <dsig:DigestValue>RutKkzCKGGhH3l0rE3cgRfhV4Pk97zrUyiBNxNWFMEI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

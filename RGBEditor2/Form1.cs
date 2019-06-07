@@ -1,24 +1,15 @@
 ﻿using System;
-using System.IO;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Globalization;
-
-
-
+using System.IO;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace WindowsFormsApp1
 {
     public partial class RGBEditor : Form
     {
-
-
+        string filename;
 
         public RGBEditor()
         {
@@ -43,16 +34,16 @@ namespace WindowsFormsApp1
             }
             else
             {
+                openFileDialog1.Filter = "N64 ROM Files (Z64,ROM,N64)|*.Z64;*.N64;*.ROM";
+                if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    Open(openFileDialog1.FileName);
+            }
+        }
 
-            
-            OpenFileDialog dialog = new OpenFileDialog();
-            openFileDialog1.Filter = "N64 ROM Files (Z64,ROM,N64)|*.Z64;*.N64;*.ROM";
-            openFileDialog1.FileName = "SM64 ROM";
-            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-
-
-
-                textBox1.Text = openFileDialog1.FileName;
+        public void Open(string filename)
+        {
+            this.filename = filename;
+            textBox1.Text = filename;
             if (textBox1.TextLength > 0)
             {
                 comboBox1.Enabled = true;
@@ -60,8 +51,8 @@ namespace WindowsFormsApp1
                 textBox3.Enabled = true;
                 textBox4.Enabled = true;
                 button2.Enabled = true;
-                    this.comboBox1.Items.Clear();
-                    comboBox1.Items.AddRange(File.ReadAllLines("RGBIndex.txt"));
+                this.comboBox1.Items.Clear();
+                comboBox1.Items.AddRange(File.ReadAllLines("RGBIndex.txt"));
                 for (int i = 1; i < comboBox1.Items.Count; i += 1)
                 {
                     comboBox1.Items.RemoveAt(i);
@@ -74,19 +65,9 @@ namespace WindowsFormsApp1
                 {
                     comboBox1.Items.RemoveAt(i);
                 }
-
-
 
                 comboBox1.SelectedIndex = 0;
-                }
-
             }
-
-                
-
-
-            
-
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
@@ -135,11 +116,11 @@ namespace WindowsFormsApp1
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+
 
             if (textBox1.TextLength > 0)
             {
-                byte[] rome = File.ReadAllBytes(openFileDialog1.FileName);
+                byte[] rome = File.ReadAllBytes(this.filename);
                 string line1 = File.ReadLines("RGBIndex.txt").Skip((comboBox1.SelectedIndex * 8) + 1).Take(1).First();
                 string line2 = File.ReadLines("RGBIndex.txt").Skip((comboBox1.SelectedIndex * 8) + 3).Take(1).First();
                 string line3 = File.ReadLines("RGBIndex.txt").Skip((comboBox1.SelectedIndex * 8) + 5).Take(1).First();
@@ -162,50 +143,50 @@ namespace WindowsFormsApp1
                 }
                 if (line2 == "n")
                 {
-                        textBox5.Enabled = false;
-                        textBox6.Enabled = false;
-                        textBox7.Enabled = false;
+                    textBox5.Enabled = false;
+                    textBox6.Enabled = false;
+                    textBox7.Enabled = false;
                 }
                 else
                 {
-                        textBox5.Enabled = true;
-                        textBox6.Enabled = true;
-                        textBox7.Enabled = true;
-                        UInt32 addrRGB2 = UInt32.Parse(line2, styleAllowHex);
-                        string rr2 = rome[addrRGB2].ToString("x");
-                        //If one integer, place 0 in front
-                        if (rr2.Length < 2)
-                        {
-                            rr2 = "0" + (rr2);
-                        }
-                        //write red RR into textbox
-                        textBox7.Text = (rr2);
+                    textBox5.Enabled = true;
+                    textBox6.Enabled = true;
+                    textBox7.Enabled = true;
+                    UInt32 addrRGB2 = UInt32.Parse(line2, styleAllowHex);
+                    string rr2 = rome[addrRGB2].ToString("x");
+                    //If one integer, place 0 in front
+                    if (rr2.Length < 2)
+                    {
+                        rr2 = "0" + (rr2);
+                    }
+                    //write red RR into textbox
+                    textBox7.Text = (rr2);
 
 
-                        //repeat for green GG
-                        string gg2 = rome[addrRGB2 + 0x01].ToString("x");
+                    //repeat for green GG
+                    string gg2 = rome[addrRGB2 + 0x01].ToString("x");
 
 
-                        if (gg2.Length < 2)
-                        {
-                            gg2 = "0" + (gg2);
-                        }
-                        textBox6.Text = (gg2);
-                        //repeat for blue BB
-                        string bb2 = rome[addrRGB2 + 0x02].ToString("x");
+                    if (gg2.Length < 2)
+                    {
+                        gg2 = "0" + (gg2);
+                    }
+                    textBox6.Text = (gg2);
+                    //repeat for blue BB
+                    string bb2 = rome[addrRGB2 + 0x02].ToString("x");
 
 
-                        if (bb2.Length < 2)
-                        {
-                            bb2 = "0" + (bb2);
-                        }
-                        textBox5.Text = (bb2);
-                    
+                    if (bb2.Length < 2)
+                    {
+                        bb2 = "0" + (bb2);
+                    }
+                    textBox5.Text = (bb2);
+
                 }
                 //Picking up an address based off Combobox Selection
-                
+
                 UInt32 addrRGB = UInt32.Parse(line1, styleAllowHex);
-                
+
                 //Read bytes from selected combobox address
                 string rr = rome[addrRGB].ToString("x");
 
@@ -214,8 +195,8 @@ namespace WindowsFormsApp1
                 {
                     rr = "0" + (rr);
                 }
-                    //write red RR into textbox
-                    textBox2.Text = (rr);
+                //write red RR into textbox
+                textBox2.Text = (rr);
 
                 //repeat for green GG
                 string gg = rome[addrRGB + 0x01].ToString("x");
@@ -225,7 +206,7 @@ namespace WindowsFormsApp1
                 {
                     gg = "0" + (gg);
                 }
-                    textBox3.Text = (gg);
+                textBox3.Text = (gg);
                 //repeat for blue BB
                 string bb = rome[addrRGB + 0x02].ToString("x");
 
@@ -234,10 +215,10 @@ namespace WindowsFormsApp1
                 {
                     bb = "0" + (bb);
                 }
-                    textBox4.Text = (bb);
+                textBox4.Text = (bb);
 
 
-                
+
             }
 
 
@@ -247,7 +228,7 @@ namespace WindowsFormsApp1
 
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
-            
+
         }
 
         NumberStyles styleAllowHex = NumberStyles.AllowHexSpecifier;
@@ -256,7 +237,7 @@ namespace WindowsFormsApp1
         private void button2_Click(object sender, EventArgs e)
         {
             //This is where it actually writes bytes to the ROM.
-            BinaryWriter bw = new BinaryWriter(File.OpenWrite(openFileDialog1.FileName));
+            BinaryWriter bw = new BinaryWriter(File.OpenWrite(this.filename));
             {
                 //Picking up an address based off Combobox Selection
                 string line1 = File.ReadLines("RGBIndex.txt").Skip((comboBox1.SelectedIndex * 8) + 1).Take(1).First();
@@ -286,7 +267,7 @@ namespace WindowsFormsApp1
 
                 }
                 // if they chose y for double rgb
-                if (line2 == "y") 
+                if (line2 == "y")
                 {
                     //Begin Address
                     bw.BaseStream.Position = addrRGB + 0x04;
@@ -303,37 +284,37 @@ namespace WindowsFormsApp1
                 if (textBox5.Enabled == true)
                 {
 
-                
-                //Picking up an address for SHADING based off Combobox Selection
-                string line3 = File.ReadLines("RGBIndex.txt").Skip((comboBox1.SelectedIndex * 8) + 3).Take(1).First();
-                //Picking up a y/n for double RGB
-                string line4 = File.ReadLines("RGBIndex.txt").Skip((comboBox1.SelectedIndex * 8) + 4).Take(1).First();
-                UInt32 addrRGB2 = UInt32.Parse(line3, styleAllowHex);
-                //This is where the code reads from the textboxes, and uses the text as a hexadecimal format.
-                //Begin Address
-                bw.BaseStream.Position = addrRGB2;
-                //Shade RR
-                bw.Write(byte.Parse(textBox7.Text, styleAllowHex));
-                bw.BaseStream.Position = addrRGB2 + 0x01;
-                //Shade GG
-                bw.Write(byte.Parse(textBox6.Text, styleAllowHex));
-                bw.BaseStream.Position = addrRGB2 + 0x02;
-                //Shade BB
-                bw.Write(byte.Parse(textBox5.Text, styleAllowHex));
 
-                // if they chose y for double rgb
-                if (line4 == "y")
-                {
+                    //Picking up an address for SHADING based off Combobox Selection
+                    string line3 = File.ReadLines("RGBIndex.txt").Skip((comboBox1.SelectedIndex * 8) + 3).Take(1).First();
+                    //Picking up a y/n for double RGB
+                    string line4 = File.ReadLines("RGBIndex.txt").Skip((comboBox1.SelectedIndex * 8) + 4).Take(1).First();
+                    UInt32 addrRGB2 = UInt32.Parse(line3, styleAllowHex);
+                    //This is where the code reads from the textboxes, and uses the text as a hexadecimal format.
                     //Begin Address
-                    bw.BaseStream.Position = addrRGB2 + 0x04;
-                    //Shade RR 2
+                    bw.BaseStream.Position = addrRGB2;
+                    //Shade RR
                     bw.Write(byte.Parse(textBox7.Text, styleAllowHex));
-                    bw.BaseStream.Position = addrRGB2 + 0x05;
-                    //Shade GG 2
+                    bw.BaseStream.Position = addrRGB2 + 0x01;
+                    //Shade GG
                     bw.Write(byte.Parse(textBox6.Text, styleAllowHex));
-                    bw.BaseStream.Position = addrRGB2 + 0x06;
-                    //Shade BB 2
+                    bw.BaseStream.Position = addrRGB2 + 0x02;
+                    //Shade BB
                     bw.Write(byte.Parse(textBox5.Text, styleAllowHex));
+
+                    // if they chose y for double rgb
+                    if (line4 == "y")
+                    {
+                        //Begin Address
+                        bw.BaseStream.Position = addrRGB2 + 0x04;
+                        //Shade RR 2
+                        bw.Write(byte.Parse(textBox7.Text, styleAllowHex));
+                        bw.BaseStream.Position = addrRGB2 + 0x05;
+                        //Shade GG 2
+                        bw.Write(byte.Parse(textBox6.Text, styleAllowHex));
+                        bw.BaseStream.Position = addrRGB2 + 0x06;
+                        //Shade BB 2
+                        bw.Write(byte.Parse(textBox5.Text, styleAllowHex));
                     }
                 }
 
@@ -341,7 +322,7 @@ namespace WindowsFormsApp1
 
                 //This is for the message dialog saying that it patched
                 MessageBox.Show("Custom RGB has been Patched!", "Patched!");
-                
+
             }
         }
 

@@ -21,8 +21,13 @@ namespace WindowsFormsApp1
             {
                 if (args[0] == "/?")
                 {
-                    Console.Writeline(@"Usage: SM64_RGB_Editor [/?] [filename]
-    filename    The ROM file to open")
+                    MessageBox.Show(@"Usage: SM64_RGB_Editor [/?] [filename]
+    filename    The ROM file to open", "SM64 RGB Editor");
+                    Application.Exit();
+                }
+                else
+                {
+                    editor.Open(args[0]);
                 }
             }
             Application.Run(editor);

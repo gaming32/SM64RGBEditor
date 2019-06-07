@@ -13,4 +13,8 @@
   <PropertyGroup>
     <EnableSecurityDebugging>false</EnableSecurityDebugging>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <StartArguments>"C:\Users\josia\MEGA\Projects\SM64 Hacks\46 oiraM repuS\46 oiraM repuS.z64"</StartArguments>
+    <StartWorkingDirectory>C:\Users\josia\Downloads</StartWorkingDirectory>
+  </PropertyGroup>
 </Project>

@@ -12,11 +12,20 @@ namespace WindowsFormsApp1
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new RGBEditor());
+            RGBEditor editor = new RGBEditor();
+            if (args.Length > 0)
+            {
+                if (args[0] == "/?")
+                {
+                    Console.Writeline(@"Usage: SM64_RGB_Editor [/?] [filename]
+    filename    The ROM file to open")
+                }
+            }
+            Application.Run(editor);
         }
     }
 }

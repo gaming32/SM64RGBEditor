@@ -14,7 +14,7 @@
     <EnableSecurityDebugging>false</EnableSecurityDebugging>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartArguments>"C:\Users\josia\MEGA\Projects\SM64 Hacks\46 oiraM repuS\46 oiraM repuS.z64"</StartArguments>
+    <StartArguments>"C:\Users\josia\MEGA\Projects\SM64 Hacks\46 oiraM repuS\46 oiraM repuS.z64" "Bully %28Left Foot%29" ff c7 ff ff 1c ff /E</StartArguments>
     <StartWorkingDirectory>C:\Users\josia\Downloads</StartWorkingDirectory>
   </PropertyGroup>
 </Project>

@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace WindowsFormsApp1
 {
@@ -68,6 +69,25 @@ namespace WindowsFormsApp1
 
                 comboBox1.SelectedIndex = 0;
             }
+        }
+
+        public void Select(string name)
+        {
+            comboBox1.SelectedItem = name;
+        }
+
+        public void FillRGB(Color color)
+        {
+            textBox2.Text = color.R.ToString("X2");
+            textBox3.Text = color.G.ToString("X2");
+            textBox4.Text = color.B.ToString("X2");
+        }
+
+        public void FillShade(Color color)
+        {
+            textBox5.Text = color.R.ToString("X2");
+            textBox6.Text = color.G.ToString("X2");
+            textBox7.Text = color.B.ToString("X2");
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
@@ -234,7 +254,7 @@ namespace WindowsFormsApp1
         NumberStyles styleAllowHex = NumberStyles.AllowHexSpecifier;
 
 
-        private void button2_Click(object sender, EventArgs e)
+        public void button2_Click(object sender, EventArgs e)
         {
             //This is where it actually writes bytes to the ROM.
             BinaryWriter bw = new BinaryWriter(File.OpenWrite(this.filename));
